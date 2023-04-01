@@ -15,7 +15,7 @@ public class ItemReview {
     @Column(name = "item_review_id", nullable = false)
     private Integer id;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
@@ -23,7 +23,7 @@ public class ItemReview {
     @Column(name = "rating")
     private Integer rating;
 
-    @javax.validation.constraints.Size(max = 255)
+    @jakarta.validation.constraints.Size(max = 255)
     @Column(name = "comment")
     private String comment;
 
