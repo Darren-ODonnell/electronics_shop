@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -31,7 +30,7 @@ public class Item {
     private String category;
 
     @Column(name = "price", precision = 10, scale = 2)
-    private BigDecimal price;
+    private Double price;
 
     @jakarta.validation.constraints.Size(max = 255)
     @Column(name = "image")
