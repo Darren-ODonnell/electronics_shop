@@ -1,7 +1,7 @@
 package com.shopApplication.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shopApplication.security.User;
+import com.shopApplication.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,18 +15,20 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
     private String username;
-    private String email;
+    private String shippingAddress;
+    private String paymentMethod;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(Integer id, String username, String shippingAddress, String paymentMethod, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
-        this.email = email;
+        this.shippingAddress = shippingAddress;
+        this.paymentMethod = paymentMethod;
         this.password = password;
         this.authorities = authorities;
     }
@@ -41,7 +43,8 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 user.get().getId(),
                 user.get().getUsername(),
-                user.get().getEmail(),
+                user.get().getShippingAddress(),
+                user.get().getPaymentMethod(),
                 user.get().getPassword(),
                 authorities);
     }
@@ -51,12 +54,16 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
     @Override

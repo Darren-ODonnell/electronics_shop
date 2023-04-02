@@ -17,8 +17,11 @@ public class SignupRequest {
 
     @NotBlank
     @Size(max = 50)
-    @Email
-    private String email;
+    private String paymentMethod;
+
+    @NotBlank
+    @Size(max = 50)
+    private String shippingAddress;
 
     private Set<String> role;
 
@@ -31,14 +34,6 @@ public class SignupRequest {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -59,5 +54,21 @@ public class SignupRequest {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

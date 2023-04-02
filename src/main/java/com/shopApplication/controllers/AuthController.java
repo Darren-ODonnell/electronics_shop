@@ -1,6 +1,8 @@
 package com.shopApplication.controllers;
 
 
+import com.shopApplication.models.Role;
+import com.shopApplication.models.User;
 import com.shopApplication.payload.request.ChangePasswordRequest;
 import com.shopApplication.payload.request.LoginRequest;
 import com.shopApplication.payload.request.SignupRequest;
@@ -8,8 +10,6 @@ import com.shopApplication.payload.response.JwtResponse;
 import com.shopApplication.payload.response.MessageResponse;
 
 import com.shopApplication.security.ERole;
-import com.shopApplication.security.Role;
-import com.shopApplication.security.User;
 import com.shopApplication.security.jwt.JwtUtils;
 import com.shopApplication.security.services.UserDetailsImpl;
 import com.shopApplication.services.RoleService;
@@ -72,7 +72,8 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
+                userDetails.getShippingAddress(),
+                userDetails.getPaymentMethod(),
                 roles));
     }
 
@@ -91,20 +92,19 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-        if (userService.existsByEmail(signupRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
+
 
         // Create new user's account
-        User user = new User(signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                encoder.encode(signupRequest.getPassword()));
+        User user = new User();
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(encoder.encode(signupRequest.getPassword()));
+        user.setShippingAddress(signupRequest.getShippingAddress());
+        user.setPaymentMethod(signupRequest.getPaymentMethod());
+
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
-            Role userRole = roleService.findByName(ERole.ROLE_PLAYER);
+            Role userRole = roleService.findByName(ERole.ROLE_USER);
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
@@ -113,12 +113,8 @@ public class AuthController {
                         Role adminRole = roleService.findByName(ERole.ROLE_ADMIN);
                         roles.add(adminRole);
                         break;
-                    case "mod":
-                        Role modRole = roleService.findByName(ERole.ROLE_COACH);
-                        roles.add(modRole);
-                        break;
                     default:
-                        Role userRole = roleService.findByName(ERole.ROLE_PLAYER);
+                        Role userRole = roleService.findByName(ERole.ROLE_USER);
                         roles.add(userRole);
                 }
             });
@@ -141,7 +137,7 @@ public class AuthController {
 
     @GetMapping(value="/user/findById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody User findById(@RequestParam("id") Long id){
+    public @ResponseBody User findById(@RequestParam("id") Integer id){
         return userService.findById(id);
 
     }
@@ -164,7 +160,7 @@ public class AuthController {
 
     @DeleteMapping(value="/user/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Integer id){
         return userService.deleteById(id);
     }
 
@@ -183,7 +179,7 @@ public class AuthController {
     }
 
     @PostMapping(value="/changePassword" )
-    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> changePassword(@ModelAttribute ChangePasswordRequest changePasswordRequest){
 
         // verify new password and passwordConfirm are the same

@@ -2,9 +2,9 @@ package com.shopApplication.services;
 
 import com.shopApplication.enums.MessageTypes;
 import com.shopApplication.exceptions.MyMessageResponse;
+import com.shopApplication.models.User;
 import com.shopApplication.payload.response.MessageResponse;
 import com.shopApplication.repositories.UserRepository;
-import com.shopApplication.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +47,7 @@ public class UserService {
 
     // return User by id
 
-    public User findById( Long id){
+    public User findById( Integer id){
         User user = userRepository.findById(id).orElse(new User());
         if(user.getId()==null)
             new MyMessageResponse(String.format("User id: %d not found", id), MessageTypes.ERROR);
@@ -60,10 +60,7 @@ public class UserService {
         return userRepository.existsByUsername(username);
     }
 
-    public Boolean existsByEmail( String email){
-        return userRepository.existsByEmail(email);
-    }
-    public boolean existsById( Long id){
+    public boolean existsById( Integer id){
         return userRepository.existsById(id);
     }
 
@@ -77,27 +74,25 @@ public class UserService {
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Username already exists", MessageTypes.WARN));
         }
-
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete( User user){
-        Long id = user.getId();
+        Integer id = user.getId();
         if(!userRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete User with id: "+id, MessageTypes.WARN));
 
         userRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
     }
-    public ResponseEntity<MessageResponse> deleteById( Long id){
+    public ResponseEntity<MessageResponse> deleteById( Integer id){
         if(userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete User with id: " + id, MessageTypes.WARN));
         }
-
     }
 
     // edit/update a User record - only if record with id exists
@@ -113,9 +108,5 @@ public class UserService {
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + user.getId() + "] -> cannot update record", MessageTypes.WARN));
         }
-
     }
-
-
-
 }

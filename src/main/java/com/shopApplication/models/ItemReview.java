@@ -1,6 +1,5 @@
 package com.shopApplication.models;
 
-import com.shopApplication.security.UserModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ public class ItemReview {
     @jakarta.validation.constraints.NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel user;
+    private User user;
 
     @Column(name = "rating")
     private Integer rating;

@@ -1,7 +1,7 @@
 package com.shopApplication.security.services;
 
+import com.shopApplication.models.User;
 import com.shopApplication.repositories.UserRepository;
-import com.shopApplication.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +14,6 @@ import java.util.Optional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-//    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -30,5 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username)));
 
         return UserDetailsImpl.build(user);
+
     }
 }

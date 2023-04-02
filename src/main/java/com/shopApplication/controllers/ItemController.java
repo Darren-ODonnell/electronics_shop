@@ -24,21 +24,21 @@ import java.util.List;
         }
 
         @GetMapping(value={"/searchByCategory"} )
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody
         List<Item> searchByCategory(@RequestParam("category") String category){
             return itemService.searchByCategory(category);
         }
 
         @GetMapping(value={"/searchByManufacturer"} )
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody
         List<Item> searchByManufacturer(@RequestParam("manufacturer") String manufacturer){
             return itemService.searchByManufacturer(manufacturer);
         }
 
         @GetMapping(value={"/searchByTitle"} )
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody
         List<Item> searchByTitle(@RequestParam("title") String title){
             return itemService.searchByTitle(title);
@@ -47,7 +47,7 @@ import java.util.List;
         // return all Items
 
         @GetMapping(value={"/","/list"} )
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody
         List<Item> list(){
             return itemService.list();
@@ -58,7 +58,7 @@ import java.util.List;
         // return  by id
 
         @GetMapping(value="/findById")
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody Item findById(@RequestParam("id") int id){
             return itemService.findById(id);
         }
@@ -66,7 +66,7 @@ import java.util.List;
         // return  by name
 
         @GetMapping(value="/findByTitle")
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
         public @ResponseBody Item findByName(@RequestParam String name) {
             return itemService.findByTitle(name);
         }
@@ -74,7 +74,7 @@ import java.util.List;
         // add new Item
 
         @PutMapping(value="/add")
-        @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
         public ResponseEntity<MessageResponse> add(@RequestBody ItemModel itemModel){
             return itemService.add(itemModel);
         }
@@ -82,7 +82,7 @@ import java.util.List;
         // edit/update a Item record - only if record with id exists
 
         @PostMapping(value="/update")
-        @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
         public ResponseEntity<MessageResponse> update(@ModelAttribute Item item) {
             return itemService.update(item);
         }
@@ -90,7 +90,7 @@ import java.util.List;
         // delete by id
 
         @DeleteMapping(value="/delete")
-        @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
         public @ResponseBody List<Item> delete(@ModelAttribute Item item){
             return itemService.delete(item.getId());
         }

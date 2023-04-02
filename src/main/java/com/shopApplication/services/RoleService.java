@@ -2,10 +2,10 @@ package com.shopApplication.services;
 
 import com.shopApplication.enums.MessageTypes;
 import com.shopApplication.exceptions.MyMessageResponse;
+import com.shopApplication.models.Role;
 import com.shopApplication.payload.response.MessageResponse;
 import com.shopApplication.repositories.RoleRepository;
 import com.shopApplication.security.ERole;
-import com.shopApplication.security.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +49,7 @@ public class RoleService {
 
     // edit/update a Role record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, Role role){
+    public ResponseEntity<MessageResponse> update(Integer id, Role role){
 
         // check if exists first
         // then update

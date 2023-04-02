@@ -1,30 +1,29 @@
 package com.shopApplication.security;
 
+import com.shopApplication.models.ItemReview;
+import com.shopApplication.models.Role;
+import com.shopApplication.models.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(	name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username")
         })
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NotBlank
     @Size(max = 20)
     private String username;
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
     @NotBlank
     @Size(max = 120)
     private String password;
@@ -34,20 +33,28 @@ public class UserModel {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "fellowship_id")
-    private Long fellowshipId;
+
+    @Size(max = 255)
+    @Column(name = "shipping_address")
+    private String shippingAddress;
+
+    @Size(max = 255)
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    @OneToMany(mappedBy = "user")
+    private Set<ItemReview> itemReviews = new LinkedHashSet<>();
 
     public UserModel() {
     }
-    public UserModel(String username, String email, String password) {
+    public UserModel(String username, String password) {
         this.username = username;
-        this.email = email;
         this.password = password;
     }
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getUsername() {
@@ -55,12 +62,6 @@ public class UserModel {
     }
     public void setUsername(String username) {
         this.username = username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public String getPassword() {
         return password;
@@ -78,7 +79,8 @@ public class UserModel {
     public User translateModelToUser(){
         User user = new User();
         user.setUsername(this.username);
-        user.setEmail(this.email);
+        user.setShippingAddress(this.shippingAddress);
+        user.setPaymentMethod(this.paymentMethod);
         user.setPassword(this.password);
         return user;
     }
