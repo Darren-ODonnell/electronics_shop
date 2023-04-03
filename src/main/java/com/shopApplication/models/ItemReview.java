@@ -1,5 +1,6 @@
 package com.shopApplication.models;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +15,15 @@ public class ItemReview {
     @Column(name = "item_review_id", nullable = false)
     private Integer id;
 
-    @jakarta.validation.constraints.NotNull
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 
     @Column(name = "rating")
     private Integer rating;

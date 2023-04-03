@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,5 +19,11 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private User customer;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "order_items",
+            joinColumns = @JoinColumn(name = "order_number"),
+            inverseJoinColumns = @JoinColumn(name = "order_item_id"))
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 }
