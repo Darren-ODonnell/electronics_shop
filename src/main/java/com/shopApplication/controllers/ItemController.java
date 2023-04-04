@@ -79,6 +79,14 @@ import java.util.List;
             return itemService.add(itemModel);
         }
 
+        @GetMapping(value="/search")
+        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        public @ResponseBody
+        List<Item> search(@RequestParam("attributeFilter") String filter,
+                          @RequestParam("searchPrompt") String prompt){
+            return itemService.search(filter, prompt);
+        }
+
         // edit/update a Item record - only if record with id exists
 
         @PostMapping(value="/update")

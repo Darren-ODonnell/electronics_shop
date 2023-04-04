@@ -1,5 +1,6 @@
 package com.shopApplication.services;
 
+import com.shopApplication.controllers.SearchStrategy.*;
 import com.shopApplication.enums.MessageTypes;
 import com.shopApplication.exceptions.MyMessageResponse;
 import com.shopApplication.models.Item;
@@ -144,4 +145,27 @@ public class ItemService {
 
         }
 
-    }
+        public List<Item> search(String filter, String prompt) {
+            SearchStrategy strategy = null;
+            switch (filter) {
+                case "category":
+                    strategy = new CategorySearchStrategy(itemRepository);
+                    break;
+                case "title":
+                    strategy = new TitleSearchStrategy(itemRepository);
+                    break;
+                case "price":
+                    strategy = new PriceSearchStrategy(itemRepository);
+                    break;
+                case "manufacturer":
+                    strategy = new ManufacturerSearchStrategy(itemRepository);
+                    break;
+            }
+
+            if(strategy != null)
+                return strategy.search(prompt);
+            else
+                return itemRepository.findAll();
+
+        }
+}

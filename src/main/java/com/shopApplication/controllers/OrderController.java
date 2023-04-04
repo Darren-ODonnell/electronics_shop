@@ -26,7 +26,7 @@ public class OrderController {
     // return all Items
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody
     List<Order> list(){
         return orderService.list();
@@ -37,7 +37,7 @@ public class OrderController {
     // return  by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody
     Order findById(@RequestParam("id") int id){
         return orderService.findById(id);

@@ -21,4 +21,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     Optional<ArrayList<Item>> searchByTitle(String title);
     @Query("SELECT i FROM Item i WHERE i.manufacturer LIKE %:manufacturer%")
     Optional<ArrayList<Item>> searchByManufacturer(String manufacturer);
+    @Query("SELECT i FROM Item i WHERE i.price = :price ")
+    Optional<ArrayList<Item>> searchByPrice(String price);
 }
