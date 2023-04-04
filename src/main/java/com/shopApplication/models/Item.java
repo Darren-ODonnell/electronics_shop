@@ -3,10 +3,7 @@ package com.shopApplication.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -14,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "item")
 public class Item {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -36,4 +34,7 @@ public class Item {
     @Column(name = "image")
     private String image;
 
+
+    @Column(name = "stock", precision = 10, scale = 2)
+    private Integer stock;
 }
