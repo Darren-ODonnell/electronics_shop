@@ -21,6 +21,8 @@ public class ItemModel {
             item.setPrice(this.price);
             item.setManufacturer(this.manufacturer);
             item.setStock(this.stock);
+
+
             return item;
         }
 }

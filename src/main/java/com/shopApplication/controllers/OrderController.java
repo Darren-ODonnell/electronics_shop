@@ -46,7 +46,7 @@ public class OrderController {
     // add new Item
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Order add(@RequestBody OrderModel orderModel){
         return orderService.add(orderModel);
     }

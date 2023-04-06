@@ -21,7 +21,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private User customer;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "order_items",
             joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "order_item_id"))

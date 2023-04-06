@@ -23,26 +23,6 @@ import java.util.List;
             this.itemService = itemService;
         }
 
-        @GetMapping(value={"/searchByCategory"} )
-        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-        public @ResponseBody
-        List<Item> searchByCategory(@RequestParam("category") String category){
-            return itemService.searchByCategory(category);
-        }
-
-        @GetMapping(value={"/searchByManufacturer"} )
-        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-        public @ResponseBody
-        List<Item> searchByManufacturer(@RequestParam("manufacturer") String manufacturer){
-            return itemService.searchByManufacturer(manufacturer);
-        }
-
-        @GetMapping(value={"/searchByTitle"} )
-        @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-        public @ResponseBody
-        List<Item> searchByTitle(@RequestParam("title") String title){
-            return itemService.searchByTitle(title);
-        }
 
         // return all Items
 
@@ -90,8 +70,8 @@ import java.util.List;
         // edit/update a Item record - only if record with id exists
 
         @PostMapping(value="/update")
-        @PreAuthorize("hasRole('ROLE_ADMIN')")
-        public ResponseEntity<MessageResponse> update(@ModelAttribute Item item) {
+        @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+        public List<Item> update(@RequestBody Item item) {
             return itemService.update(item);
         }
 

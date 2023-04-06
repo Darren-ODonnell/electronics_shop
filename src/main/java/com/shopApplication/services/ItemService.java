@@ -51,27 +51,6 @@ public class ItemService {
             return items;
         }
 
-        public List<Item> findAll(){
-            List<Item> items = itemRepository.findAll();
-            if(items.isEmpty()) new MyMessageResponse("Error: No items listed", MessageTypes.WARN);
-            return items;
-        }
-
-        public List<Item> findByCategory(String category){
-            List<Item> items = itemRepository.findByCategory(category).orElse(new ArrayList<>());
-            if (items.isEmpty())
-                new MyMessageResponse(String.format("Item category: %d not found", category), MessageTypes.ERROR);
-            return items;
-        }
-
-        public List<Item> findByManufacturer(String manufacturer){
-            List<Item> items = itemRepository.findByManufacturer(manufacturer).orElse(new ArrayList<>());
-            if (items.isEmpty())
-                new MyMessageResponse(String.format("Item manufacturer: %d not found", manufacturer), MessageTypes.ERROR);
-            return items;
-        }
-
-
         public Item findByTitle(String title){
             Item Item = itemRepository.findByTitle(title).orElse(new Item());
             if (!Item.getTitle().equals(title))
@@ -131,17 +110,15 @@ public class ItemService {
 
         // edit/update a Item record - only if record with id exists
 
-        public ResponseEntity<MessageResponse> update(Item Item){
+        public List<Item> update(Item Item){
 
             // check if exists first
             // then update
 
-            if(itemRepository.existsById(Item.getId())) {
+            if(itemRepository.existsById(Item.getId()))
                 itemRepository.save(Item);
-                return ResponseEntity.ok(new MyMessageResponse("Item record updated", MessageTypes.INFO));
-            } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + Item.getId() + "] -> cannot update record", MessageTypes.WARN));
-            }
+
+            return itemRepository.findAll();
 
         }
 

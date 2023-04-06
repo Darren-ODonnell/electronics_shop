@@ -1,9 +1,12 @@
 package com.shopApplication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,6 +38,11 @@ public class Item {
     private String image;
 
 
-    @Column(name = "stock", precision = 10, scale = 2)
+    @Column(name = "stock")
     private Integer stock;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonManagedReference
+    private List<ItemReview> reviews;
 }

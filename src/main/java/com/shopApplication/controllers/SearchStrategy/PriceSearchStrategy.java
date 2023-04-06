@@ -14,6 +14,7 @@ public class PriceSearchStrategy implements SearchStrategy {
     }
 
     public List<Item> search(String prompt) {
-        return itemRepository.searchByPrice(prompt).orElse(new ArrayList<>());
+        return new ArrayList<>();
+//        return itemRepository.searchByPrice(prompt).orElse(new ArrayList<>());
     }
 }
