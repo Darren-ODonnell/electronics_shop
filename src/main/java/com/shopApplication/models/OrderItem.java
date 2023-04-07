@@ -1,6 +1,7 @@
 package com.shopApplication.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_order_no")
+    @JsonIgnoreProperties("children")
     @JsonBackReference
     private Order customerOrderNo;
 

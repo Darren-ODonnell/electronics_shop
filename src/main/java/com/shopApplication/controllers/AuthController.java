@@ -8,7 +8,6 @@ import com.shopApplication.payload.request.LoginRequest;
 import com.shopApplication.payload.request.SignupRequest;
 import com.shopApplication.payload.response.JwtResponse;
 import com.shopApplication.payload.response.MessageResponse;
-
 import com.shopApplication.security.ERole;
 import com.shopApplication.security.jwt.JwtUtils;
 import com.shopApplication.security.services.UserDetailsImpl;
@@ -69,12 +68,15 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        List<Role> rolesList = roleService.findByNames(roles);
+//        List<Role> rolesList = userRoleService.findByUserId(userDetails.getId());
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getShippingAddress(),
                 userDetails.getPaymentMethod(),
-                roles));
+                rolesList));
     }
 
     // Register

@@ -6,12 +6,12 @@ import com.shopApplication.models.Role;
 import com.shopApplication.payload.response.MessageResponse;
 import com.shopApplication.repositories.RoleRepository;
 import com.shopApplication.security.ERole;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,5 +65,14 @@ public class RoleService {
 
     public void save(Role role) {
         roleRepository.save(role);
+    }
+
+    public List<Role> findByNames(List<String> roles) {
+        List<Role> roleList = new ArrayList<>();
+
+        for (String s : roles) {
+            roleList.add(roleRepository.findByName(ERole.valueOf(s)).orElse(new Role()));
+        }
+        return roleList;
     }
 }

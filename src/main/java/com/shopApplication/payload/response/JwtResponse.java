@@ -1,19 +1,21 @@
 package com.shopApplication.payload.response;
 
+import com.shopApplication.models.Role;
+
 import java.util.List;
 
 
 public class JwtResponse {
-    private String token;
+    private String accessToken;
     private String type = "Bearer";
     private Integer id;
     private String username;
     private String shippingAddress;
     private String paymentMethod;
-    private List<String> roles;
+    private List<Role> roles;
 
-    public JwtResponse(String accessToken, Integer id, String username, String shippingAddress, String paymentMethod, List<String> roles) {
-        this.token = accessToken;
+    public JwtResponse(String accessToken, Integer id, String username, String shippingAddress, String paymentMethod, List<Role> roles) {
+        this.accessToken = accessToken;
         this.id = id;
         this.username = username;
         this.shippingAddress = shippingAddress;
@@ -22,11 +24,11 @@ public class JwtResponse {
     }
 
     public String getAccessToken() {
-        return token;
+        return accessToken;
     }
 
     public void setAccessToken(String accessToken) {
-        this.token = accessToken;
+        this.accessToken = accessToken;
     }
 
     public String getTokenType() {
@@ -61,7 +63,7 @@ public class JwtResponse {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -73,7 +75,7 @@ public class JwtResponse {
         this.username = username;
     }
 
-    public List<String> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 

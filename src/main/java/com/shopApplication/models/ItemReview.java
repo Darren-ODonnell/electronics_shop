@@ -29,7 +29,7 @@ public class ItemReview {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties("children")
     @JsonBackReference
     private Item item;
 

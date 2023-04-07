@@ -204,4 +204,60 @@ SQLx Sql scripts to incorporate into repositories
         refactoring done - original clases and supporting code left in for now!
     E10: Remove hard coded clubname into application properties file
         Two files affected Stat services and teamsheet service
- 
+
+{   "id":1
+    ,"title":"iPhone"
+    ,"manufacturer":"Apple"
+    ,"category":"Phone"
+    ,"price":1000
+    ,"image":"imageStr"
+    ,"stock":22,
+    "reviews":[
+        {"item_review_id":1,
+        "user":
+            {"id":29,
+            "password":"$2a$11$Ip4JCsT0AECokmOvcO9.m.iwm2j7qVYN4IXVpwg7E.Mi0LcGn\/Sfa",
+            "username":"aaa",
+            "shippingAddress":"Dublin",
+            "paymentMethod":"visa",
+            "roles":[
+                {"id":2,
+                "name":"ROLE_USER"},
+                {"id":1,"name":
+                "ROLE_ADMIN"}]
+        },"rating":4,
+        "comment":"good"}
+]
+}
+
+Value [
+{   "id":1,
+    "title":"iPhone",
+    "manufacturer":"Apple",
+    "category":"Phone",
+    "price":1000,
+    "image":"imageStr",
+    "stock":22,
+    "reviews":[
+        {"item_review_id":1,
+        "user":
+            {"id":29,
+            "password":"$2a$11$Ip4JCsT0AECokmOvcO9.m.iwm2j7qVYN4IXVpwg7E.Mi0LcGn\/Sfa",
+            "username":"aaa",
+            "shippingAddress":"Dublin",
+            "paymentMethod":"visa",
+            "roles":[
+                {"id":1,"name":"ROLE_ADMIN"},
+                {"id":2,"name":"ROLE_USER"}
+            ]},
+        "rating":4,
+        "comment":"good"}
+        ]
+},
+
+{"id":2,"title":"Galaxy","manufacturer":"Samsung","category":"Phone","price":800,"image":"galaxyStr","stock":46,"reviews":[]
+},
+{"id":3,"title":"Galaxy TV","manufacturer":"Samsung","category":"Television","price":1600,"image":"galaxyTvStr","stock":32,"reviews":[]
+}
+
+] of type org.json.JSONArray cannot be converted to JSONObject
