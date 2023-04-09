@@ -1,6 +1,5 @@
 package com.shopApplication.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.NotNull;
@@ -27,10 +26,9 @@ public class ItemReview {
     private User user;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "item_id", nullable = false)
-    @JsonIgnoreProperties("children")
-    @JsonBackReference
+    @JsonManagedReference
     private Item item;
 
     @Column(name = "rating")

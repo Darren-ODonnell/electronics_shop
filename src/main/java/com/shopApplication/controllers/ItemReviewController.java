@@ -43,6 +43,13 @@ public class ItemReviewController {
         return itemReviewService.findById(id);
     }
 
+
+    @GetMapping(value="/findByItem")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody
+    List<ItemReview> findGroupedByItemId(){
+        return itemReviewService.findGroupedByItemId();
+    }
     // return  by name
 
     // add new ItemReview

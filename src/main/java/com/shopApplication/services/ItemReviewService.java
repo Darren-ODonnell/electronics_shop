@@ -2,6 +2,7 @@ package com.shopApplication.services;
 
 import com.shopApplication.enums.MessageTypes;
 import com.shopApplication.exceptions.MyMessageResponse;
+import com.shopApplication.models.Item;
 import com.shopApplication.models.ItemReview;
 import com.shopApplication.models.ItemReviewModel;
 import com.shopApplication.payload.response.MessageResponse;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemReviewService {
@@ -52,11 +55,29 @@ public class ItemReviewService {
             return ItemReview;
         }
 
+    public List<ItemReview> findGroupedByItemId(){
+        List<Object[]> list = itemReviewRepository.findItemReviewsGroupedByItem();
+        List<ItemReview> reviews = list.stream()
+                .map(array -> {
+                    int itemId = (int) array[0];
+                    Optional<Item> optionalItem = itemRepository.findById(itemId);
+                    ItemReview review = new ItemReview();
+                    review.setRating((int) Math.round((double)array[1]));
+                    optionalItem.ifPresent(review::setItem);
+                    return review;
+                })
+                .collect(Collectors.toList());
+        return reviews;
+
+    }
+
         // check if a ItemReviewname exists
 
         public ResponseEntity<MessageResponse> add(ItemReviewModel item){
 
-                ItemReview itemReview = itemReviewRepository.save(item.translateModelToItemReview(userRepository));
+            ItemReview itemReview = item.translateModelToItemReview(userRepository, itemRepository);
+
+                itemReviewRepository.save(itemReview);
 
                 //This doesn't need to happen because the database doesn't have a list inside item only the pojo does.
 

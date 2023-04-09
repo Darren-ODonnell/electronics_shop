@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,14 +111,13 @@ public class ItemService {
 
         // edit/update a Item record - only if record with id exists
 
-        public List<Item> update(Item Item){
+    @Transactional
+    public List<Item> update(int id, int stock){
 
             // check if exists first
             // then update
-
-            if(itemRepository.existsById(Item.getId()))
-                itemRepository.save(Item);
-
+            if(itemRepository.existsById(id))
+                itemRepository.updateStockById(id, stock);
             return itemRepository.findAll();
 
         }

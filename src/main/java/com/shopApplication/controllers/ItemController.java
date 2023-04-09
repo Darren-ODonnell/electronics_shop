@@ -71,8 +71,8 @@ import java.util.List;
 
         @PostMapping(value="/update")
         @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-        public List<Item> update(@RequestBody Item item) {
-            return itemService.update(item);
+        public @ResponseBody List<Item> update(@RequestParam("id") int id, @RequestParam("stock") int stock) {
+            return itemService.update(id, stock);
         }
 
         // delete by id

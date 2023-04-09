@@ -16,7 +16,7 @@ public class OrderItemModel {
     public OrderItem translateModelToOrderItem(ItemRepository itemRepository, Order order) {
         OrderItem orderItem = new OrderItem();
         orderItem.setCustomerOrderNo(order);
-        orderItem.setItem(itemRepository.getById(item_id));
+        orderItem.setItem(itemRepository.findById(item_id).orElse(new Item()));
         orderItem.setQuantity(quantity);
         return orderItem;
     }

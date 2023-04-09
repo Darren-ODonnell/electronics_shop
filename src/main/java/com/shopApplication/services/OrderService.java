@@ -69,6 +69,7 @@ public class OrderService {
                     orderItems.add(model.translateModelToOrderItem(itemRepository, order));
                 }
 
+                order.setOrderItems(orderItems);
                 orderItemRepository.saveAll(orderItems);
                 return order;
 //            } else {

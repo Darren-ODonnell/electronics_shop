@@ -1,6 +1,5 @@
 package com.shopApplication.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +27,8 @@ public class Order {
 //            joinColumns = @JoinColumn(name = "order_number"),
 //            inverseJoinColumns = @JoinColumn(name = "order_item_id"))
 
-    @OneToMany(mappedBy = "customerOrderNo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "customerOrderNo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonManagedReference
     private List<OrderItem> orderItems = new ArrayList<>();
 
