@@ -6,6 +6,9 @@ import com.shopApplication.models.User;
 import com.shopApplication.payload.request.ChangePasswordRequest;
 import com.shopApplication.payload.request.LoginRequest;
 import com.shopApplication.payload.request.SignupRequest;
+import com.shopApplication.payload.request.Validators.PasswordMatchValidator;
+import com.shopApplication.payload.request.Validators.UsernameValidator;
+import com.shopApplication.payload.request.Validators.ValidatorChain;
 import com.shopApplication.payload.response.JwtResponse;
 import com.shopApplication.payload.response.MessageResponse;
 import com.shopApplication.security.ERole;
@@ -83,18 +86,15 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody  SignupRequest signupRequest) {
-        if(!signupRequest.getPassword().equals(signupRequest.getPasswordConfirm())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Passwords do not match!"));
-        }
 
-        if (userService.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
+        ValidatorChain validatorChain = new ValidatorChain();
+        validatorChain.addValidator(new PasswordMatchValidator());
+        validatorChain.addValidator(new UsernameValidator(userService));
+        ResponseEntity<?> responseEntity = validatorChain.validate(signupRequest);
 
+        if (responseEntity != null) {
+            return responseEntity;
+        }
 
         // Create new user's account
         User user = new User();
