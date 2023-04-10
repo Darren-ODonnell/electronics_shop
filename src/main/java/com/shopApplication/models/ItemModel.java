@@ -14,16 +14,14 @@ public class ItemModel {
         private Integer stock;
 
         public Item translateModelToItem(){
-            Item item = new Item();
-            item.setTitle(this.title);
-            item.setCategory(this.category);
-            item.setImage(this.image);
-            item.setPrice(this.price);
-            item.setManufacturer(this.manufacturer);
-            item.setStock(this.stock);
-
-
-            return item;
+            return new ItemBuilder()
+                    .setTitle(this.title)
+                    .setCategory(this.category)
+                    .setImage(this.image)
+                    .setPrice(this.price)
+                    .setManufacturer(this.manufacturer)
+                    .setStock(this.stock)
+                    .build();
         }
 }
 
